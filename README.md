@@ -7,6 +7,7 @@
 ## General Introduction
 
 Many studies have tried to explain the evolution of cooperation among unrelated individuals. It has been shown that migration alone, or reputation will promote cooperation. Most of the time, in real life, more than one factor play a role at the same time and we will model how the combination of migration and reputation will influence the evolution of cooperation.
+
 We believe that cooperation will also be promoted in this model and it will be interesting to see how reputation and migration relate to each other.
 
 (States your motivation clearly: why is it important / interesting to solve this problem?)
@@ -23,7 +24,9 @@ We will use the well known prisoner's dilemma game. Our version of the game will
 ## Fundamental Questions
 
 How do reputation and migration influence the evolution of cooperation ?
+
 How do they relate to each other ? How does reputation influence migration and does it affect it in a favorable way for cooperation ?
+
 What are the necessary conditions for reputation and migration in order to promote cooperation ?
 
 (At the end of the project you want to find the answer to these questions)
@@ -40,6 +43,7 @@ We believe that these mechanisms will promote cooperation. The reputation will p
 ## References 
 
 The outbreak of cooperation among success-driven individuals under noisy conditions by Dirk Helbing and Wenjian Yu
+
 We will base our model on their prisoner's dilemma game with migration and extend it with a reputation system.
 
 (Add the bibliographic references you intend to use)
