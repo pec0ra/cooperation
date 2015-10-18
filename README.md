@@ -18,7 +18,7 @@ We believe that cooperation will also be promoted in this model and it will be i
 
 We will use the well known prisoner's dilemma game in a game-theoretical way. In this game, the players can take an action among two options: either cooperate or defect. According to their behavior, there is a payoff which motivate them to defect mutually rather than cooperate. It is represented by the payoff matrix below.
 
-![alt tag](https://github.com/pec0ra/cooperation/pd_payoff_matrix.png)
+![alt tag](https://github.com/pec0ra/cooperation/blob/master/other/pd_payoff_matrix.png)
 
 As it described in the above, mutual cooperation gives reward payoff R both players, and one defection between two players gives temptation payoff T for defector which is larger than R so that it induces the player to defect when the opponent cooperates and sucker's payoff S for sucker. In case of mutual defection, they will get punishment P payoff whish is larger than S so that it also induces the player to defect when the opponent defect. In sum, everybody is expected to defect, called the "tragedy of the commons' (Hardin, 1968).
 
