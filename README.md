@@ -39,11 +39,11 @@ In addition, we will extend this game by "success-driven migration" and "reputat
 
 ## Fundamental Questions
 
-How do reputation and migration influence the evolution of cooperation ?
+How do success-driven and reputation-based migration influence the evolution of cooperation ?
 
-How do they relate to each other ? How does reputation influence migration and does it affect it in a favorable way for cooperation ?
+How do they relate to each other ? How does reputation influence success-driven migration and does it affect it in a favorable way for cooperation ?
 
-What are the necessary conditions for reputation and migration in order to promote cooperation ?
+What are the necessary conditions for success-driven and reputation-based migration in order to promote cooperation ?
 
 (At the end of the project you want to find the answer to these questions)
 (Formulate a few, clear questions. Articulate them in sub-questions, from the more general to the more specific. )
