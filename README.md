@@ -25,7 +25,7 @@ As it described in the above, mutual cooperation gives reward payoff *R* both pl
 
 We simply model social interactions on the *L* X *L* 2-dimensional spatial grid [1]. There are *N* individuals occupying grid sites, and they interact with *m* direct neighbors (von Neumann neighborhoods). The overall payoff *P* of player *i* at iteration *t* is the sum of each payoffs resulting from binary interactions with all von Neumann neighbors [2], and the respective player "imitate" the strategy of best performing neighbor.
 
-In addition, we will extend this game by "success-driven migration" and "reputation-based migration". Before the imitation step, a player can move to improve their expected overall payoff to empty site within a quadratic area of *(2M+1)* X *(2M+1)* sites (the Moore neighborhood of size *M*, e.g. the 8 neighboring sites for *M* = 1). A player can also evaluate the surrounding environment and decide whether he leaves or not by comparing his reputation and those of his neighbors [3]. Below equations accounts for the reputation effect in mobility.
+In addition, we will extend this game by "success-driven migration" and "reputation-based migration". Before the imitation step, a player can move to improve their expected overall payoff to empty site within a quadratic area of *(2M+1)* X *(2M+1)* sites (the Moore neighborhood of size *M*, e.g. the 8 neighboring sites for *M* = 1). A player can also evaluate the surrounding environment and decide whether he leaves or not by comparing his reputation and those of his neighbors [3]. Below equations account for the reputation effect in mobility.
 
 ![alt tag](https://github.com/pec0ra/cooperation/blob/master/other/reputation_eq.png)
 
