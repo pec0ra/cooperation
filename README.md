@@ -2,13 +2,13 @@
 
 > * Group Name: The friendly prisoners
 > * Group participants names: Byungsoo Kim, Basile Maret
-> * Project Title: Influence of migration and reputation in the evolution of cooperation.
+> * Project Title: Influence of success-driven and reputation-based migration in the evolution of cooperation.
 
 ## General Introduction
 
-Many studies have tried to explain the evolution of cooperation among unrelated individuals. It has been shown that success-driven migration with imitating superior strategies, or reputation mechanism will promote cooperation where individuals pursue selfishness. Most of the time, in real life, more than one factor play a role at the same time and we will model how the combination of migration and reputation will influence the evolution of cooperation.
+Many studies have tried to explain the evolution of cooperation among unrelated individuals. It has been shown that success-driven migration with imitating superior strategies, or reputation-based migration will promote cooperation where individuals pursue selfishness. Most of the time, in real life, more than one factor play a role at the same time and we will model how the combination of success-driven and reputation-based migration will influence the evolution of cooperation.
 
-We believe that cooperation will also be promoted in this model and it will be interesting to see how migration and reputation relate to each other.
+We believe that cooperation will also be promoted in this model and it will be interesting to see how success-driven and reputation-based migration relate to each other.
 
 (States your motivation clearly: why is it important / interesting to solve this problem?)
 (Add real-world examples, if any)
@@ -29,7 +29,9 @@ As it described in the above, mutual cooperation gives reward payoff *R* both pl
 
 We simply model social interactions on the *L* X *L* 2-dimensional spatial grid [1]. There are *N* individuals occupying grid sites, and they interact with *m* direct neighbors (von Neumann neighborhoods). The overall payoff *P* of player *i* at iteration *t* is the sum of each payoffs resulting from binary interactions with all von Neumann neighbors [2], and the respective player "imitate" the strategy of best performing neighbor.
 
-In addition, we will extend this game by "success-driven migration" and "reputation system". Before the imitation step, a player can move to improve their expected overall payoff to empty site within a quadratic area of *(M+1)* X *(M+1)* sites (the Moore neighborhood of size *M*). 
+In addition, we will extend this game by "success-driven migration" and "reputation-based migration". Before the imitation step, a player can move to improve their expected overall payoff to empty site within a quadratic area of *(2M+1)* X *(2M+1)* sites (the Moore neighborhood of size *M*, e.g. the 8 neighboring sites for *M* = 1). A player can also evaluate the surrounding environment and decide whether he leaves or not by comparing his reputation and those of his neighbors [3]. Below equations accounts for the reputation effect in mobility.
+
+![alt tag](https://github.com/pec0ra/cooperation/blob/master/other/reputation_eq.png)
 
 
 (Define dependent and independent variables you want to study. Say how you want to measure them.) (Why is your model a good abtraction of the problem you want to study?) (Are you capturing all the relevant aspects of the problem?)
@@ -56,9 +58,11 @@ We believe that these mechanisms will promote cooperation. The reputation will p
 
 ## References 
 
-Helbing, D. & Yu, W. (2009). The outbreak of cooperation among success-driven individuals under noisy conditions. *Proceedings of the National Academy of Sciences of the United States of America (PNAS), 106,* 3680–3685.
+Helbing, D., & Yu, W. (2009). The outbreak of cooperation among success-driven individuals under noisy conditions. *Proceedings of the National Academy of Sciences, 106*(10), 3680-3685.
 
-Helbing, D., Yu, W., & Rauhut, H. (2011). Self-Organization and Emergence in Social Systems: Modeling the Coevolution of Social Environments and Cooperative Behavior. *Journal of Mathematical Sociology 35,* 177-208.
+Helbing, D., Yu, W., & Rauhut, H. (2011). Self-organization and emergence in social systems: Modeling the coevolution of social environments and cooperative behavior. *The Journal of Mathematical Sociology, 35*(1-3), 177-208.
+
+Cong, R., Wu, B., Qiu, Y., & Wang, L. (2012). Evolution of cooperation driven by reputation-based migration. *PloS one, 7*(5), e35776.
 
 (Add the bibliographic references you intend to use)
 (Explain possible extension to the above models)
