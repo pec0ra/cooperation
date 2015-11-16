@@ -1,29 +1,41 @@
 function cooperation
 
 % parameters
-T=1.3;
+T=1.2;
 R=1;
-P=0.1;
+P=0;
 S=0;
 payoff=[R S;T P];
 
-L=49; % grid size
+L=100; % grid size
 L2=L^2;
-emptySiteProp=0.5;
-cooperatorProp=0.5;
+emptySiteProp=0.3;
+cooperatorProp=0.39;
 defectorProp=1.0-cooperatorProp;
 cooperator=1;
 defector=2;
 m=4; % # of von Neumann neighbors
-M=5; % Moore neighborhood
-imitationOn=true;
-migrationOn=false;
-rProb=0.05; % strategy reset probability
+M=1; % Moore neighborhood
+rProb=0.00; % strategy reset probability
 qProb=0.05; % cooperation prefer probability
+alpha=0.5;
+gamma=500;
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% imitation only = true, false, false, false
+% success-driven migration only = false, true, false, false
+% reputation-based migration only = true, false, true, true
+% our model = true, true, true, false;
+imitationOn=true;
+successMigrationOn=false;
+reputationOn=true;
+randomMigrationOn=true;
+
 
 grid=uint8(zeros(L));
-overallPayoff=zeros(L); % accumulated??
-iter=200;
+overallPayoff=zeros(L); % accumulated
+reputation=zeros(L);
+iter=10;
 
 % initialize
 rng(1); % for reproduction
@@ -74,14 +86,10 @@ for t=1:iter
             continue;
         end
         
-        op=getOverallPayoff(focal,r,c,L,grid,payoff);
-        
-        % migration
-        if migrationOn
-            highestPayoff=op;
-            highestrc=[r c];
-            
-            % test interaction
+        leaving_prob = 1;
+        if reputationOn      
+            % sum reputations
+            sum_reputation = 0;
             for MNr=MN
                 rr=r+MNr;
                 if rr < 1 || rr > L
@@ -91,21 +99,61 @@ for t=1:iter
                     cc=c+MNc;
                     
                     if cc < 1 || cc > L || ...
+                       grid(rr,cc) == 0 % empty
+                       continue;
+                    end
+                    
+                    sum_reputation = sum_reputation + reputation(rr,cc)^gamma;
+                end
+            end
+            
+            if sum_reputation > 0
+                leaving_prob = reputation(r,c)^gamma / sum_reputation;
+            else
+                leaving_prob = 0; % initial state
+            end
+            
+            % update reputation, 
+            reputation(r,c) = reputation(r,c)*alpha;
+            if cooperator
+                reputation(r,c) = reputation(r,c) + 1;
+            end
+        end
+        
+        
+        op=getOverallPayoff(focal,r,c,L,grid,payoff);
+        
+        % migration
+        leave = rand();
+        if successMigrationOn && leave <= leaving_prob
+            highestPayoff=op;
+            highestrc=[r c];
+
+            % test interaction
+            for MNr=MN
+                rr=r+MNr;
+                if rr < 1 || rr > L
+                   continue;
+                end
+                for MNc=MN
+                    cc=c+MNc;
+
+                    if cc < 1 || cc > L || ...
                         (rr == r && cc == c) || ... % itself
                         grid(rr,cc) ~= 0 % empty
                        continue;
                     end
-                    
+
                     % fictitious payoff
                     op=getOverallPayoff(focal,rr,cc,L,grid,payoff);
-        
+
                     if op>highestPayoff
                         highestPayoff=op;
                         highestrc=[rr cc];
                     end
                 end
             end
-            
+
             % migrate to the candidate site
             if highestrc(1) ~= r || highestrc(2) ~= c
                 grid(highestrc(1),highestrc(2))=grid(r,c);
@@ -113,9 +161,45 @@ for t=1:iter
                 r=highestrc(1);
                 c=highestrc(2);
             end
-            
+
             op=highestPayoff;
+            
+        elseif randomMigrationOn && leave <= leaving_prob
+            % gather empty sites
+            empty_sites = [];
+            for MNr=MN
+                rr=r+MNr;
+                if rr < 1 || rr > L
+                   continue;
+                end
+                for MNc=MN
+                    cc=c+MNc;
+
+                    if cc < 1 || cc > L || ...
+                        (rr == r && cc == c) || ... % itself
+                        grid(rr,cc) ~= 0 % empty
+                       continue;
+                    end
+                    
+                    empty_sites = [empty_sites; rr cc];
+                end
+            end
+                    
+            if size(empty_sites,1) > 0
+                % select an empty place randomly
+                rc = randi([1,size(empty_sites,1)]);
+                rr = empty_sites(rc, 1);
+                cc = empty_sites(rc, 2);
+
+                % migrate to there
+                op=getOverallPayoff(focal,rr,cc,L,grid,payoff);
+                grid(rr,cc)=grid(r,c);
+                grid(r,c)=0;
+                r=rr;
+                c=cc;
+            end
         end
+               
         
         % update
         overallPayoff(r,c)=overallPayoff(r,c)+op;
@@ -156,8 +240,8 @@ for t=1:iter
     
         % noise 1
         reset = rand();
-        if reset < rProb % random strategy change
-            if rand() < qProb
+        if reset <= rProb % random strategy change
+            if rand() <= qProb
                 grid(r,c)=cooperator;
             else
                 grid(r,c)=defector;
