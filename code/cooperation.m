@@ -16,7 +16,6 @@ M=1; % Moore neighborhood
 % Model 1 : success-driven migration only = false, true, false, false
 % Model 2 : reputation-based migration only = true, false, true, true
 % Model 3 : our model = true, true, true, false;
-model
 if model == 0
     imitationOn=true;
     successMigrationOn=false;

@@ -1,5 +1,7 @@
 close all;
 
+parallelOn=true;
+
 mkdir('results');
 folder=strcat('results/', datestr(now, 'yyyy.mm.dd-HH.MM.SS'));
 mkdir(folder);
@@ -20,15 +22,15 @@ Ss=0:0;
 
 L=100; % grid size
 
-emptySiteProps=0.3:0.3;
-cooperatorProps=0.39:0.39;
+emptySiteProps=0.4:0.4;
+cooperatorProps=0.4:0.4;
 
 rProbs=0.00:0.00; % strategy reset probability
 qProbs=0.05:0.05; % cooperation prefer probability
 alphas=0.5:0.5;
 gammas=500:500;
 
-models=[1,2,3];
+models=0:3;
 
 iterationNumber=10;
 
@@ -40,7 +42,7 @@ cooperatorLevels = [];
 i=1;
 for T=Ts;
 for R=Rs;
-for S=Rs;
+for S=Ss;
 for P=Ps;
     payoff=[R S;T P];
     
@@ -70,9 +72,17 @@ for P=Ps;
             fclose(file);
             
             levels = zeros(1,4);
-            
-            for model=models
-                levels(model+1) = cooperation(iterationNumber, L, payoff, emptySiteProp, cooperatorProp, rProb, qProb, alpha, gamma, model, path);
+
+            if(parallelOn)
+                parfor model=models;
+                    levels(model+1) = cooperation(iterationNumber, L, payoff, emptySiteProp, cooperatorProp, rProb, qProb, alpha, gamma, model, path);
+                    disp(sprintf('  Finished model %d', model));
+                end
+            else
+                for model=models;
+                    levels(model+1) = cooperation(iterationNumber, L, payoff, emptySiteProp, cooperatorProp, rProb, qProb, alpha, gamma, model, path);
+                    disp(sprintf('  Finished model %d', model));
+                end
             end
             cooperatorLevels = [cooperatorLevels; levels];
             i=i+1;
@@ -87,6 +97,8 @@ end
 end
 end
 
+% You can reimport this data with the command
+%   cooperatorLevels = csvread('<path_to_cooperatorLevels>.dat')
 csvwrite(strcat(folder, '/', 'cooperatorLevels.dat'), cooperatorLevels); 
     
     
