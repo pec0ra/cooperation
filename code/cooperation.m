@@ -1,41 +1,50 @@
-function cooperation
+function levelCooperator = cooperation(iterationNumber, gridSize, payoff, emptySiteProp, cooperatorProp, rProb, qProb, alpha, gamma, model, path)
 
-% parameters
-T=1.2;
-R=1;
-P=0;
-S=0;
-payoff=[R S;T P];
 
-L=100; % grid size
+
+L=gridSize; % grid size
 L2=L^2;
-emptySiteProp=0.3;
-cooperatorProp=0.39;
 defectorProp=1.0-cooperatorProp;
 cooperator=1;
 defector=2;
 m=4; % # of von Neumann neighbors
 M=1; % Moore neighborhood
-rProb=0.00; % strategy reset probability
-qProb=0.05; % cooperation prefer probability
-alpha=0.5;
-gamma=500;
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% imitation only = true, false, false, false
-% success-driven migration only = false, true, false, false
-% reputation-based migration only = true, false, true, true
-% our model = true, true, true, false;
-imitationOn=true;
-successMigrationOn=false;
-reputationOn=true;
-randomMigrationOn=true;
+% Model 0 : imitation only = true, false, false, false
+% Model 1 : success-driven migration only = false, true, false, false
+% Model 2 : reputation-based migration only = true, false, true, true
+% Model 3 : our model = true, true, true, false;
+model
+if model == 0
+    imitationOn=true;
+    successMigrationOn=false;
+    reputationOn=false;
+    randomMigrationOn=false;
+elseif model == 1
+    imitationOn=false;
+    successMigrationOn=true;
+    reputationOn=false;
+    randomMigrationOn=false;
+elseif model == 2
+    imitationOn=true;
+    successMigrationOn=false;
+    reputationOn=true;
+    randomMigrationOn=true;
+elseif model == 3
+    imitationOn=true;
+    successMigrationOn=true;
+    reputationOn=true;
+    randomMigrationOn=false;
+else
+    error('Model does not exist');
+end
 
 
 grid=uint8(zeros(L));
 overallPayoff=zeros(L); % accumulated
 reputation=zeros(L);
-iter=10;
 
 % initialize
 rng(1); % for reproduction
@@ -55,8 +64,8 @@ for i=1:M
     MN=[MN -i i];
 end
 
-levelCooperator=sum(sum(grid==cooperator))/size(sitePos,2)
-levelDefector=1-levelCooperator
+levelCooperator=sum(sum(grid==cooperator))/size(sitePos,2);
+levelDefector=1-levelCooperator;
 
 
 str='Grid, t=0';
@@ -64,15 +73,17 @@ str='Grid, t=0';
 cmap = [1, 1, 1,
     0, 0, 1,
     1, 0, 0];
-figure('Name',str)
+fig = figure('Name',str);
+set(fig, 'visible','off')
 imagesc(grid);
 colormap(cmap);
 axis square
+saveas(fig, strcat(path, 'm', int2str(model), '-t0.jpg'));
 
     
 % start simulation
-for t=1:iter
-    disp(num2str(t,'iter=%d'));
+for t=1:iterationNumber
+    %disp(num2str(t,'iter=%d'));
     
     % update order
     [R, C]=ind2sub([L L],randperm(L2));
@@ -256,14 +267,16 @@ for t=1:iter
 %     axis square
 end
 
-levelCooperator=sum(sum(grid==cooperator))/size(sitePos,2)
-levelDefector=1-levelCooperator
+levelCooperator=sum(sum(grid==cooperator))/size(sitePos,2);
+levelDefector=1-levelCooperator;
 
 str=num2str(t,'Grid, t=%d');
-figure('Name',str)
+fig=figure('Name',str);
+set(fig, 'visible','off')
 imagesc(grid);
 colormap(cmap);
 axis square
+saveas(fig, strcat(path, 'm', int2str(model), '-t', int2str(t), '.jpg'));
 
 end
 
