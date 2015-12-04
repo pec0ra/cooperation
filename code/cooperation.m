@@ -14,8 +14,9 @@ M=1; % Moore neighborhood
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Model 0 : imitation only = true, false, false, false
 % Model 1 : success-driven migration only = false, true, false, false
-% Model 2 : reputation-based migration only = true, false, true, true
-% Model 3 : our model = true, true, true, false;
+% Model 2 : success-driven migration and immitation = true, true, false, false
+% Model 3 : reputation-based migration only = true, false, true, true
+% Model 4 : our model = true, true, true, false;
 if model == 0
     imitationOn=true;
     successMigrationOn=false;
@@ -28,10 +29,15 @@ elseif model == 1
     randomMigrationOn=false;
 elseif model == 2
     imitationOn=true;
+    successMigrationOn=true;
+    reputationOn=false;
+    randomMigrationOn=false;
+elseif model == 3
+    imitationOn=true;
     successMigrationOn=false;
     reputationOn=true;
     randomMigrationOn=true;
-elseif model == 3
+elseif model == 4
     imitationOn=true;
     successMigrationOn=true;
     reputationOn=true;
@@ -63,9 +69,10 @@ for i=1:M
     MN=[MN -i i];
 end
 
+
 levelCooperator=sum(sum(grid==cooperator))/size(sitePos,2);
 levelDefector=1-levelCooperator;
-
+levelsCooperator = [levelCooperator];
 
 str='Grid, t=0';
 % colormap, w:empth, b:cooperator, r:defector
@@ -258,13 +265,15 @@ for t=1:iterationNumber
             end
         end
     end
-    
+levelsCooperator=[levelsCooperator sum(sum(grid==cooperator))/size(sitePos,2)];
 %     str=num2str(t,'Grid, t=%d');
 %     figure('Name',str)
 %     imagesc(grid);
 %     colormap(cmap);
 %     axis square
 end
+
+csvwrite(strcat(path, 'iterLevels-model', int2str(model), '.dat'), levelsCooperator);
 
 levelCooperator=sum(sum(grid==cooperator))/size(sitePos,2);
 levelDefector=1-levelCooperator;
