@@ -92,8 +92,8 @@ for P=Ps;
                 str = 'Cooperator ratio evolution';
                 fig = figure('Name',str);
                 set(fig, 'visible','off')
-                plot(1:iterationNumber+1, iterLevels(:,1), 1:iterationNumber+1, iterLevels(:,3), 1:iterationNumber+1, iterLevels(:,4), 1:iterationNumber+1, iterLevels(:,5))
-                legend('Immitation only', 'Success driven migration and immitation', 'Reputation-based migration only', 'Immitation and success-driven and reputation-based migration')
+                plot(1:iterationNumber+1, iterLevels(:,1), 1:iterationNumber+1, iterLevels(:,2), 1:iterationNumber+1, iterLevels(:,3), 1:iterationNumber+1, iterLevels(:,4), 1:iterationNumber+1, iterLevels(:,5))
+                legend('Immitation only', 'Success driven migration only', 'Success driven migration and immitation', 'Reputation-based migration only', 'Immitation and success-driven and reputation-based migration')
                 ylabel('Cooperator ratio');
                 xlabel('Iterations');
                 print(strcat(path, '/cooperator-ratio-evolution'), '-depsc');
