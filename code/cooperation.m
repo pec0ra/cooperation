@@ -15,8 +15,11 @@ M=1; % Moore neighborhood
 % Model 0 : imitation only = true, false, false, false
 % Model 1 : success-driven migration only = false, true, false, false
 % Model 2 : success-driven migration and immitation = true, true, false, false
-% Model 3 : reputation-based migration only = true, false, true, true
-% Model 4 : our model = true, true, true, false;
+% Model 3 : reputation-based migration and immitation = true, false, true, false
+% Model 4 : reputation-based migration only = false, false, true, false
+% Model 5 : reputation-based migration and success-driven migration
+%           (without immitation) = false, true, true, false
+% Model 6 : our model = true, true, true, false;
 if model == 0
     imitationOn=true;
     successMigrationOn=false;
@@ -36,8 +39,18 @@ elseif model == 3
     imitationOn=true;
     successMigrationOn=false;
     reputationOn=true;
-    randomMigrationOn=true;
+    randomMigrationOn=false;
 elseif model == 4
+    imitationOn=false;
+    successMigrationOn=false;
+    reputationOn=true;
+    randomMigrationOn=false;
+elseif model == 5
+    imitationOn=false;
+    successMigrationOn=true;
+    reputationOn=true;
+    randomMigrationOn=false;
+elseif model == 6
     imitationOn=true;
     successMigrationOn=true;
     reputationOn=true;
@@ -74,22 +87,26 @@ levelCooperator=sum(sum(grid==cooperator))/size(sitePos,2);
 levelDefector=1-levelCooperator;
 levelsCooperator = [levelCooperator];
 
-str='Grid, t=0';
 % colormap, w:empth, b:cooperator, r:defector
 cmap = [1, 1, 1,
     0, 0, 1,
     1, 0, 0];
-fig = figure('Name',str);
-set(fig, 'visible','off')
-imagesc(grid);
-colormap(cmap);
-axis square
-saveas(fig, strcat(path, 'm', int2str(model), '-t0.jpg'));
-
+if model == 0
+    str='Grid, t=0';
+    
+    fig = figure('Name',str);
+    set(fig, 'visible','off')
+    imagesc(grid);
+    colormap(cmap);
+    axis square
+    saveas(fig, strcat(path, 'initial_state.jpg'));
+end
     
 % start simulation
 for t=1:iterationNumber
-    %disp(num2str(t,'iter=%d'));
+    if (mod(t, 200)) == 0
+        disp(num2str(t,'iter=%d'));
+    end
     
     % update order
     [R, C]=ind2sub([L L],randperm(L2));
@@ -132,7 +149,7 @@ for t=1:iterationNumber
             
             % update reputation, 
             reputation(r,c) = reputation(r,c)*alpha;
-            if cooperator
+            if grid(r, c) == cooperator
                 reputation(r,c) = reputation(r,c) + 1;
             end
         end

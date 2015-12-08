@@ -11,7 +11,6 @@ file=fopen(strcat(folder, '/', 'readme.txt'), 'w');
 fprintf(file, desc);
 fclose(file);
 
-duplicateNumber=2;
 
 % parameters
 Ts=1.2:1.2;
@@ -22,17 +21,17 @@ Ss=0:0;
 
 L=100; % grid size
 
-emptySiteProps=0.4:0.4;
-cooperatorProps=0.4:0.4;
+emptySiteProps=0.3:0.3;
+cooperatorProps=0.5:0.5;
 
-rProbs=0.00:0.00; % strategy reset probability
+rProbs=0:0; % strategy reset probability
 qProbs=0.05:0.05; % cooperation prefer probability
-alphas=0.5:0.5;
-gammas=500:500;
+alphas=0.1:0.1;
+gammas=logspace(0, 3, 8);
 
-models=0:4;
+models=0:6;
 
-iterationNumber=20;
+iterationNumber=1000;
 
 
 l = length(Ts)*length(Rs)*length(Ps)*length(Ss)*length(emptySiteProps)*length(cooperatorProps)*length(rProbs)*length(qProbs)*length(alphas)*length(gammas);
@@ -92,8 +91,8 @@ for P=Ps;
                 str = 'Cooperator ratio evolution';
                 fig = figure('Name',str);
                 set(fig, 'visible','off')
-                plot(1:iterationNumber+1, iterLevels(:,1), 1:iterationNumber+1, iterLevels(:,2), 1:iterationNumber+1, iterLevels(:,3), 1:iterationNumber+1, iterLevels(:,4), 1:iterationNumber+1, iterLevels(:,5))
-                legend('Immitation only', 'Success driven migration only', 'Success driven migration and immitation', 'Reputation-based migration only', 'Immitation and success-driven and reputation-based migration')
+                plot(1:iterationNumber+1, iterLevels(:,1), 1:iterationNumber+1, iterLevels(:,2), 1:iterationNumber+1, iterLevels(:,3), 1:iterationNumber+1, iterLevels(:,4), 1:iterationNumber+1, iterLevels(:,5), 1:iterationNumber+1, iterLevels(:,6), 1:iterationNumber+1, iterLevels(:,7))
+                legend('Immitation only', 'Success driven migration only', 'Success driven migration and immitation', 'Reputation-based migration and immitation', 'reputation-based migration only', 'success-driven and reputation-based migration', 'Immitation and success-driven and reputation-based migration')
                 ylabel('Cooperator ratio');
                 xlabel('Iterations');
                 print(strcat(path, '/cooperator-ratio-evolution'), '-depsc');
@@ -111,21 +110,21 @@ end
 end
 end
 
-xAxis = cooperatorProps;
-name = 'cooperatorProps';
+xAxis = gammas;
+name = 'gamma';
 
 str = 'Cooperator ratio';
 figure('Name',str);
-plot(xAxis, cooperatorLevels(:,1), xAxis, cooperatorLevels(:, 2), xAxis, cooperatorLevels(:, 3), xAxis, cooperatorLevels(:, 4), xAxis, cooperatorLevels(:, 5))
-legend('Immitation only', 'Success driven migration only', 'Success driven migration and immitation', 'Reputation-based migration only', 'Immitation and success-driven and reputation-based migration')
+plot(xAxis, cooperatorLevels(:,1), xAxis, cooperatorLevels(:, 2), xAxis, cooperatorLevels(:, 3), xAxis, cooperatorLevels(:, 4), xAxis, cooperatorLevels(:, 5), xAxis, cooperatorLevels(:, 6), xAxis, cooperatorLevels(:, 7))
+legend('Immitation only', 'Success driven migration only', 'Success driven migration and immitation', 'Reputation-based migration only', 'reputation-based migration only', 'success-driven and reputation-based migration', 'Immitation and success-driven and reputation-based migration')
 ylabel('Cooperator ratio');
 xlabel(name);
 print(strcat(folder, '/cooperator-ratio'), '-depsc');
 
 str = 'Cooperator ratio log';
 fig = figure('Name',str);
-semilogy(xAxis, cooperatorLevels(:,1), xAxis, cooperatorLevels(:, 2), xAxis, cooperatorLevels(:, 3), xAxis, cooperatorLevels(:, 4), xAxis, cooperatorLevels(:, 5))
-legend('Immitation only', 'Success driven migration only', 'Success driven migration and immitation', 'Reputation-based migration only', 'Immitation and success-driven and reputation-based migration')
+semilogy(xAxis, cooperatorLevels(:,1), xAxis, cooperatorLevels(:, 2), xAxis, cooperatorLevels(:, 3), xAxis, cooperatorLevels(:, 4), xAxis, cooperatorLevels(:, 5), xAxis,  cooperatorLevels(:, 6), xAxis, cooperatorLevels(:, 7))
+legend('Immitation only', 'Success driven migration only', 'Success driven migration and immitation', 'Reputation-based migration only', 'reputation-based migration only', 'success-driven and reputation-based migration', 'Immitation and success-driven and reputation-based migration')
 ylabel('Cooperator ratio');
 xlabel(name);
 print(strcat(folder, '/cooperator-ratio-log'), '-depsc');
