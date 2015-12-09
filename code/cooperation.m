@@ -15,8 +15,8 @@ M=1; % Moore neighborhood
 % Model 0 : imitation only = true, false, false, false
 % Model 1 : success-driven migration only = false, true, false, false
 % Model 2 : success-driven migration and immitation = true, true, false, false
-% Model 3 : reputation-based migration and immitation = true, false, true, false
-% Model 4 : reputation-based migration only = false, false, true, false
+% Model 3 : reputation-based migration and immitation = true, false, true, true
+% Model 4 : reputation-based migration only = false, false, true, true
 % Model 5 : reputation-based migration and success-driven migration
 %           (without immitation) = false, true, true, false
 % Model 6 : our model = true, true, true, false;
@@ -39,12 +39,12 @@ elseif model == 3
     imitationOn=true;
     successMigrationOn=false;
     reputationOn=true;
-    randomMigrationOn=false;
+    randomMigrationOn=true;
 elseif model == 4
     imitationOn=false;
     successMigrationOn=false;
     reputationOn=true;
-    randomMigrationOn=false;
+    randomMigrationOn=true;
 elseif model == 5
     imitationOn=false;
     successMigrationOn=true;
@@ -104,7 +104,7 @@ end
     
 % start simulation
 for t=1:iterationNumber
-    if (mod(t, 200)) == 0
+    if (mod(t, 500)) == 0
         disp(num2str(t,'iter=%d'));
     end
     

@@ -37,8 +37,10 @@ iterationNumber=1000;
 l = length(Ts)*length(Rs)*length(Ps)*length(Ss)*length(emptySiteProps)*length(cooperatorProps)*length(rProbs)*length(qProbs)*length(alphas)*length(gammas);
 disp(strcat('We will run ', int2str(l), ' rounds, with ', int2str(length(models)), ' models each.'));
 
+
 cooperatorLevels = [];
 i=1;
+time_elapsed = 0;
 for T=Ts;
 for R=Rs;
 for S=Ss;
@@ -52,6 +54,7 @@ for P=Ps;
         for emptySiteProp=emptySiteProps;
         for cooperatorProp=cooperatorProps;
             
+            tic;
             disp(num2str(i,'Starting round %d'))
             
             path = strcat(folder, '/', int2str(i), '/');
@@ -70,8 +73,8 @@ for P=Ps;
             fprintf(file, 'iterationNumber=%d\n', iterationNumber);
             fclose(file);
             
-            levels = zeros(1,5);
-            iterLevels = zeros(iterationNumber + 1, 5);
+            levels = zeros(1,7);
+            iterLevels = zeros(iterationNumber + 1, 7);
 
             if parallelOn;
                 parfor model=models;
@@ -98,7 +101,14 @@ for P=Ps;
                 print(strcat(path, '/cooperator-ratio-evolution'), '-depsc');
                 
             cooperatorLevels = [cooperatorLevels; levels];
+            
+            time_elapsed = time_elapsed + toc;
+            remaining_time = ((time_elapsed/i) * (l - i));
+            disp(sprintf('Time elapsed : %.0f min', time_elapsed/60));
+            disp(sprintf('Remaining time : %.0f min', remaining_time/60));
+            
             i=i+1;
+            
         end
         end
     end
