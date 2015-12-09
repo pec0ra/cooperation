@@ -7,6 +7,7 @@
 \usepackage{epstopdf}
 \usepackage{natbib}
 \usepackage{amssymb, amsmath}
+\usepackage{algorithm, algpseudocode}
 \DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
 
 %\title{Title}
@@ -113,7 +114,7 @@ Most of the time, in real life, more than one factor play a role at the same tim
 \section{Description of the Model}
 \subsection{Prisoner's Dilemma}
 
-We will use the well known prisoner's dilemma game in a game-theoretical way. In this game, the players can take an action among two options: either cooperate or defect. According to their behavior, there is a payoff which motivate them to defect mutually rather than cooperate. It is represented by the payoff matrix below:
+We will use the well known prisoner's dilemma game in a game-theoretical way. In this game, the players can take an action among two options: either cooperate or defect. According to their behaviour, there is a payoff which motivate them to defect mutually rather than cooperate. It is represented by the payoff matrix below:
 
 \begin{figure}[!htbp]
 	\centering
@@ -123,23 +124,166 @@ We will use the well known prisoner's dilemma game in a game-theoretical way. In
 \end{figure}
 
 \newpage
-As it described in the above, mutual cooperation gives reward payoff $R$ both players, and one defection between two players gives temptation payoff $T$ for defector which is larger than $R$ so that it induces the player to defect when the opponent cooperates and sucker's payoff $S$ for sucker. In case of mutual defection, they will get punishment $P$ payoff whish is larger than $S$ so that it also induces the player to defect when the opponent defect. In sum, everybody is expected to defect, called the \textit{"tragedy of the commons"} (Hardin, 1968).
+As it described in the above, mutual cooperation gives reward payoff $R$ both players, and one defection between two players gives temptation payoff $T$ for defector which is larger than $R$ so that it induces the player to defect when the opponent cooperates and sucker's payoff $S$ for sucker. In case of mutual defection, they will get punishment $P$ payoff which is larger than $S$ so that it also induces the player to defect when the opponent defect. In sum, everybody is expected to defect, called the \textit{"tragedy of the commons"} (Hardin, 1968).
 
 
 \subsection{Spatial Game with Strategies}
 
-We simply model social interactions on the $L \times L$ 2-dimensional spatial grid [1]. There are $N$ individuals occupying grid sites with the ratio $\rho$, and they interact with $m$ direct neighbors (von Neumann neighborhoods). The overall payoff $P$ of player $i$ at iteration $t$ is the sum of each payoffs resulting from binary interactions with all von Neumann neighbors [2], and the respective player "imitate" the strategy of best performing neighbor.
+We simply model social interactions on the $L \times L$ 2-dimensional spatial grid [1]. There are $N$ individuals occupying grid sites with the ratio $\rho$, and they interact with $m$ direct neighbours (von Neumann neighbourhoods). The overall payoff $P$ of player $i$ at iteration $t$ is the sum of each payoffs resulting from binary interactions with all von Neumann neighbours [2], and the respective player "imitate" the strategy of best performing neighbour.
 
-In addition, we will extend this game by including both success-driven migration and reputation-based migration. Before the imitation step, a player can move to improve their expected overall payoff to empty site within a quadratic area of $(2M+1) \times (2M+1)$ sites (the Moore neighborhood of size $M$, e.g. the 8 neighboring sites for $M = 1$). A player can also evaluate the surrounding environment and decide whether he leaves or not by comparing his reputation and those of his neighbors [3]. Below equations account for the reputation effect in mobility:
+In addition, we will extend this game by including both success-driven migration and reputation-based migration. Before the imitation step, a player can move to improve their expected overall payoff to empty site within a quadratic area of $(2M+1) \times (2M+1)$ sites (the Moore neighbourhood of size $M$, e.g. the 8 neighbouring sites for $M = 1$). A player can also evaluate the surrounding environment and decide whether he leaves or not by comparing his reputation and those of his neighbours [3]. Below equations account for the reputation effect in mobility:
 
 \begin{figure}[!htbp]
 	\centering
-	\includegraphics[scale=0.75]{../../other/reputation_eq.png}
+	\includegraphics[scale=0.7]{../../other/reputation_eq.png}
     \caption{Reputation Equations}
     \label{fig:reputationeq}
 \end{figure}
 
+
+
 \section{Implementation}
+The code for each model is implemented in \verb|code/cooperation.m|, and the code for the experiment is implemented in \verb|code/cooperation_script.m|. The initial population density $\rho$ is 0.7, and the ration of the cooperators to the defectors is 0.5.
+
+\subsection{Strategy Imitation}
+Basically, all models include \verb|Strategy Imitation| procedure as follows:
+
+\begin{algorithm}[!htbp]
+  \caption{Strategy Imitation}\label{imitation}
+  \begin{algorithmic}[1]
+    \Procedure{Strategy Imitation}{$r,c$}
+      \State $payoff_{max} \gets payoff_{r,c}$
+      \State $r_{max},c_{max} \gets r,c$
+      \For{$neighbor \gets neighbors$}\Comment{von Neumann Neighbour $m$}
+      	\If {$payoff_{neighbor} > payoff_{max}$}\Comment{Find the Best Neighbour}
+        \State $payoff_{max} \gets payoff_{neighbor}$
+        \State $r_{max},c_{max} \gets r_{neighbor},c_{neighbor}$
+        \EndIf
+      \EndFor
+      \State $strategy_{r,c} \gets strategy_{r_{max},c_{max}}$   \Comment{Imitate Strategy (Cooperator or Defector)}
+    \EndProcedure
+  \end{algorithmic}
+\end{algorithm}
+
+
+\subsection{Success-Driven Migration Model}
+In success-driven migration model, each individual update its payoff and compute the fictitious payoff of empty neighbour sites, then migrate to there as follows:
+
+\begin{algorithm}[!htbp]
+  \caption{Success-Driven Migration Model}\label{successdriven}
+	\begin{algorithmic}[1]
+	\Procedure{Success-Driven Migration Model}{}
+		\For{$iter \gets 1 \textrm{ to } iter_{max}$}
+		\For{$r,c \gets grid$}	\Comment{In Random Sequential Order}
+			\State \textbf{Update Payoff$(r,c)$}
+			\State $r_{new},c_{new} \gets$ \textbf{Success-Driven Migration$(r,c)$}
+			\State \textbf{Strategy Imitation$(r_{new},c_{new})$}
+		\EndFor      
+		\EndFor      
+    \EndProcedure
+	\end{algorithmic}
+		
+	\begin{algorithmic}[1]
+    \Procedure{Update Payoff}{$r,c$}
+      \For{$neighbor \gets neighbors$}\Comment{von Neumann Neighbour $m$}
+      	\State $payoff_{r,c} \gets payoff_{r,c} + payoffMatrix(r,c, neighbor)$ \Comment{Matrix of $T,R,P,S$}
+      \EndFor      
+    \EndProcedure
+  \end{algorithmic}		
+		
+	\begin{algorithmic}[1]
+    \Procedure{Success-Driven Migration}{$r,c$}
+      \State $payoff_{max} \gets payoff_{r,c}$\Comment{The Maximum Fictitious Payoff}
+      \State $r_{max},c_{max} \gets r,c$
+      \For{$neighbor \gets neighbors$}\Comment{Empty Sites in Moore Neighbour $M$}
+      	\If {$payoff_{neighbor} > payoff_{max}$}\Comment{Find the Best Neighbour}
+        \State $payoff_{max} \gets payoff_{neighbor}$
+        \State $r_{max},c_{max} \gets r_{neighbor},c_{neighbor}$
+        \EndIf
+      \EndFor
+      \State $strategy_{r_{max},c_{max}} \gets strategy_{r,c}$   \Comment{Migrate to the Best Candidate}
+      \State $payoff_{r_{max},c_{max}} \gets payoff_{r,c}$
+      \State $strategy_{r,c} \gets empty$   \Comment{Make Previous Site Clear}
+      \State $payoff_{r,c} \gets 0$
+      \State \textbf{return} $r_{new},c_{new}$	\Comment{Return Migrated Site}
+    \EndProcedure
+  \end{algorithmic}
+\end{algorithm}
+
+
+\subsection{Reputation-Based Migration Model}
+In reputation-based migration model, individuals compute the reputation of neighbours and leaving probability based on it. Then, move to a random empty site and imitate strategy as follows:
+
+\begin{algorithm}[!htbp]
+  \caption{Reputation-Based Migration Model}\label{reputationbased}
+	\begin{algorithmic}[1]
+	\Procedure{Reputation-Based Migration Model}{}
+		\For{$iter \gets 1 \textrm{ to } iter_{max}$}
+		\For{$r,c \gets grid$}	\Comment{Random order}
+			\State \textbf{Update Payoff$(r,c)$}
+			\State {$P \gets$ \textbf{Compute Reputation$(r,c,\gamma,\alpha)$}}
+			\State $r_{new},c_{new} \gets$ \textbf{Random Migration$(r,c,P)$}
+			\State \textbf{Strategy Imitation$(r_{new},c_{new})$}
+		\EndFor      
+		\EndFor      
+    \EndProcedure
+	\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[!htbp]
+  \caption{Reputation-Based Migration}\label{reputationbasedmigration}
+	\begin{algorithmic}[1]
+    \Procedure{Compute Reputation}{$r,c,\gamma,\alpha$}
+      \State $sum_{reputation} \gets 0$\Comment{Sum of Neighbours Reputation}
+	  \State $P \gets 0$\Comment{The Probability of Leaving}
+      \For{$neighbor \gets neighbors$}\Comment{Empty Sites in Moore Neighbour $M$}
+        \State $sum_{reputation} \gets sum_{reputation} + reputation_{neighbor}^{\gamma}$
+      \EndFor
+      \If {$sum_{reputation} > 0$}
+      	\State $P \gets reputation_{r,c}^{\gamma} / sum_{reputation}$
+      \EndIf
+      \State $reputation_{r,c} \gets reputation_{r,c} \times \alpha$ \Comment{Update Own reputation}
+      \If {$strategy_{reputation} == cooperator$ }
+      	\State $reputation_{r,c} \gets reputation_{r,c} + 1$
+      \EndIf
+      \State \textbf{return} $P$ \Comment{Return the Probability of Leaving}
+    \EndProcedure
+  \end{algorithmic}
+		
+	\begin{algorithmic}[1]
+    \Procedure{Random Migration}{$r,c,P$}
+      \State{$neighbor \gets rand(neighbors,P)$} \Comment{Select an Empty Sites in Moore Neighbour $M$}
+      \State $strategy_{r_{neighbor},c_{neighbor}} \gets strategy_{r,c}$   \Comment{Migrate to the Neighbour}
+      \State $payoff_{r_{neighbor},c_{neighbor}} \gets payoff_{r,c}$
+      \State $strategy_{r,c} \gets empty$   \Comment{Make Clear Previous Site}
+      \State $payoff_{r,c} \gets 0$
+      \State \textbf{return} $r_{new},c_{new}$	\Comment{Return Migrated Site}
+    \EndProcedure
+  \end{algorithmic}
+\end{algorithm}
+
+
+\subsection{Our Model}
+Lastly, our model, which is the combination of success-driven migration and reputation-based migration model, is in the following:
+
+\begin{algorithm}[!htbp]
+  \caption{Success-Driven and Reputation-Based Migration Model}\label{ourmodel}
+	\begin{algorithmic}[1]
+	\Procedure{Success-Driven and Reputation-Based Migration Model}{}
+		\For{$iter \gets 1 \textrm{ to } iter_{max}$}
+		\For{$r,c \gets grid$}	\Comment{Random order}
+			\State \textbf{Update Payoff$(r,c)$}
+			\State $P \gets$ \textbf{Compute Reputation$(r,c,\gamma,\alpha)$}
+			\State $r_{new},c_{new} \gets r,c$
+			\If {$P > rand()$}	\Comment{with the Probability of Leaving}
+				\State $r_{new},c_{new} \gets$ \textbf{Success-Driven Migration$(r,c)$}
+			\EndIf
+			\State \textbf{Strategy Imitation$(r_{new},c_{new})$}
+		\EndFor      
+		\EndFor      
+    \EndProcedure
+	\end{algorithmic}
+\end{algorithm}
 
 \section{Simulation Results and Discussion}
 
