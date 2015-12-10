@@ -1,0 +1,14 @@
+T=1.20
+R=1.00
+P=0.00
+S=0.00
+
+emptySiteProp=0.30
+cooperatorProp=0.50
+
+rProb=0.00
+qProb=0.05
+
+alpha=0.10
+gamma=2.68
+iterationNumber=5000
