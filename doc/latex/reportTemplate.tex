@@ -102,13 +102,13 @@
 \newpage
 \section{Introduction and Motivations}
 
-Cooperation is one of the most important issue in the society in terms of the stability and productivity of the society where individuals pursue selfishness. Many studies have tried to explain the evolution of cooperation among unrelated individuals, and we can improve our understand about it in a game-theoretical way. Individuals are affected by interacting with neighbours so that their life is affected in either positive or negative way. Through the interaction, they notice the relative situation of their life and take an action to improve it. For instance, \textit{imitation} of neighbour's superior strategy (be cooperator or defector), \textit{migration} to some other place where has a better potential benefit. There are existing models for each action.
+Cooperation is one of the most important issue in the society in terms of the stability and productivity of the society where individuals pursue selfishness. Many studies have tried to explain the evolution of cooperation among unrelated individuals, and we can improve our understanding about it in a game-theoretical way. Individuals are affected by interacting with neighbours so that their life is affected in either positive or negative way. Through the interaction, they notice the relative situation of their life and take an action to improve it. For instance, \textit{imitation} of neighbour's superior strategy (be cooperator or defector), \textit{migration} to some other place which has a better potential benefit. There are existing models for each action.
 
 In the \textit{success-driven} migration model [1][2], it assumes that individuals prefer to migrate to the place where they can get the best benefit within a certain area. In an empty place, it is possible to estimate the potential benefit based on the assumption that they migrate to there and interact with their neighbours around it. Provided better potential benefit than the one of current place, individuals \textit{immediately move} to the best candidate place.  
 
 On the other hand, individuals can maximize their future benefit by considering the reputation of their neighbours as a long-term plan, not the potential benefit of the empty sites. In the \textit{reputation-based} migration model [3], individuals evaluate their neighbours based on their reputation. As for reputation here, a cooperator has higher reputation than a defector, and it can be accumulated over time. Contrary to the success-driven migration model, individuals \textit{decide whether move or not} based on the neighbours' overall reputation before migrating to a random empty place.
 
-Most of the time, in real life, more than one factor play a role at the same time. Our model in this paper, the combination of the success-driven and reputation-based migration model to decide where to go and whether move or not \textit{simultaneously}, is designed to reflect that fact. Lastly, we will look in detail how this model will influence the evolution of cooperation.
+Most of the time, in real life, more than one factor play a role at the same time. Our model in this paper is designed to reflect that fact. It is the combination of the success-driven and reputation-based migration model to decide where to go and whether move or not \textit{simultaneously}. Lastly, we will look in detail how this model will influence the evolution of cooperation.
 
 
 \section{Description of the Model}
@@ -124,7 +124,7 @@ We will use the well known prisoner's dilemma game in a game-theoretical way. In
 \end{figure}
 
 \newpage
-As it described in the above, mutual cooperation gives reward payoff $R$ both players, and one defection between two players gives temptation payoff $T$ for defector which is larger than $R$ so that it induces the player to defect when the opponent cooperates and sucker's payoff $S$ for sucker. In case of mutual defection, they will get punishment $P$ payoff which is larger than $S$ so that it also induces the player to defect when the opponent defect. In sum, everybody is expected to defect, called the \textit{"tragedy of the commons"} (Hardin, 1968).
+As shown in figure~\ref{fig:paymatrix}, mutual cooperation gives reward payoff $R$ to both players. One defection between two players gives the temptation payoff $T$ for defector which is larger than $R$ so that it induces the player to defect when the opponent cooperates. The opponent will get what is called the sucker's payoff $S$. In case of mutual defection, they will get punishment $P$ payoff which is larger than $S$ so that it also induces the player to defect when the opponent defect. In sum, everybody is expected to defect, called the \textit{"tragedy of the commons"} (Hardin, 1968).
 
 
 \subsection{Spatial Game with Strategies}
