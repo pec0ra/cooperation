@@ -317,6 +317,36 @@ The Success-Driven migration model always converges faster than our model. This 
 	\caption{Cooperator ratios after a big number of iterations. We can see that the three models converge in about 2000 iterations. We used the parameters $\alpha = 0.5$ and $\gamma = 500$}
 \end{figure}
 
+\begin{figure}
+	\centering
+	\begin{subfigure}[t]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{../../other/grids/m2-t1000.jpg}
+	\caption{Grid after 1000 iterations}
+    	\end{subfigure}
+	\begin{subfigure}[t]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{../../other/grids/m2-t3000.jpg}
+	\caption{Grid after 3000 iterations}
+    	\end{subfigure}
+
+	\caption{Grids for the Success-Driven migration model after different number of iterations. We can see that it almost doesn't change and reached a stable state. We used the parameters $\alpha = 0.5$ and $\gamma = 500$}
+	\label{fig:grids_stable}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{subfigure}[t]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{../../other/grids/m6-t1000.jpg}
+	\caption{Grid after 1000 iterations}
+    	\end{subfigure}
+	\begin{subfigure}[t]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{../../other/grids/m6-t3000.jpg}
+	\caption{Grid after 3000 iterations}
+    	\end{subfigure}
+
+	\caption{Grids for the Success-Driven and Reputation-Based migration model after different number of iterations. We can see that it almost doesn't change and reached a stable state. We used the parameters $\alpha = 0.5$ and $\gamma = 500$}
+	\label{fig:grids_stable}
+\end{figure}
+
 The Reputation-Based migration model only reached a stable cooperator ratio after a number of iteration in the order of 30'000. This is due to the random nature of the migration. The player don't choose an empty place based on their interest to migrate but get assigned a random one. Our simulations didn't have results that could give us certainty that this stable cooperator ratio is always reached and that there won't be an instability after a greater number of iterations.
 
 \begin{figure}
@@ -447,12 +477,29 @@ All the three last points showed us that the combination of success-driven migra
 
 One of the drawback of the Reputation-Based migration model was its randomness and unpredictability. Our model gives stability to this Reputation-Based migration by adding the choice of the place to migrate. In terms of convergence, cooperator ratios and cooperator patterns, our model distinguish itself from the reputation-based migration model by getting the predictability of the success-driven migration model.
 
-Our model doesn't get cooperator ratios as high as the success-driven migration model. However, it gets ratios higher than $90\%$ with almost all the parameters $\alpha$ and $\gamma$ we tested. This is higher than the reputation-based migration model.
+Our model doesn't get cooperator ratios as high as the success-driven migration model. However, it gets ratios higher than 90\% with almost all the parameters $\alpha$ and $\gamma$ we tested. This is higher than the reputation-based migration model.
 
 Finally, our model manages to get this high ratio, almost as high as the one from the success-driven migration model, with a more natural way of migrating. Our model lets the player migrate based on their choice and we can see this in a slower rate of convergence. Even if the highest cooperator needs more time to be reached, the cooperator still take over the defectors.
 
 
 \section{Summary and Outlook}
+
+We used MATLAB to implement the prisoner's dilemma game with imitation and with three different migration models :
+\begin{enumerate}
+	\item Success-Driven migration
+	\item Reputation-Based migration
+	\item Success-Driven and Reputation-Based migration (our model)
+\end{enumerate}
+We ran simulations of the game for the three different models and compared the results. The purpose was to find if our model, which is a more natural one based on choice instead of randomness, can have a cooperator ratio higher than or as high as the other models.
+
+Our model was found to converge rapidly to a high ratio of cooperators. This convergence in thousands of iterations was similar to the one of the Success-Driven migration model but was slower to reach its value. It distinguished our model from the Reputation-Based migration model which didn't reach any stable state before tens of thousand of iteration.
+
+The cooperator ratios our model converges to are almost as high as the one from the Success-Driven migration model but generally lower. They are still always above 90\% except for some extreme parameters. It again distinguished our model from the Reputation-Based migration model which tendency was to have a ratio falling to 0\%.
+
+We didn't analyse our model under noisy conditions and an interesting next step would be to try and compare our model similarly to the work of Helbing and Yu in The outbreak of cooperation among success-driven individuals under noisy conditions [1]. Another interesting addition would be to try our model with different payoff parameters or temptation to defect.
+
+
+
 
 \section{References}
 
