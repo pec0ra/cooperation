@@ -110,7 +110,7 @@
 \newpage
 \section{Introduction and Motivations}
 
-Cooperation is one of the most important issue in the society in terms of the stability and productivity of the society where individuals pursue selfishness. Many studies have tried to explain the evolution of cooperation among unrelated individuals, and we can improve our understanding about it in a game-theoretical way. Individuals are affected by interacting with neighbours so that their life is affected in either positive or negative way. Through the interaction, they notice the relative situation of their life and take an action to improve it. For instance, \textit{imitation} of neighbour's superior strategy (be cooperator or defector), \textit{migration} to some other place which has a better potential benefit. There are existing models for each action.
+Cooperation is one of the most important issue in the society in terms of the stability and productivity of the society where individuals pursue selfishness. Many studies have tried to explain the evolution of cooperation among unrelated individuals, and we can improve our understanding about it in a game-theoretical way. Individuals are affected by interacting with neighbours so that their life is affected in either positive or negative way. Through the interaction, they notice the relative situation of their life and take an action to improve it. For instance, \textit{imitation} of neighbour's superior strategy (be cooperator or defector) or \textit{migration} to some other place which has a better potential benefit. There are existing models for each action.
 
 In the \textit{success-driven} migration model [1][2], it assumes that individuals prefer to migrate to the place where they can get the best benefit within a certain area. In an empty place, it is possible to estimate the potential benefit based on the assumption that they migrate to there and interact with their neighbours around it. Provided better potential benefit than the one of current place, individuals \textit{immediately move} to the best candidate place.  
 
@@ -132,7 +132,7 @@ We will use the well known prisoner's dilemma game in a game-theoretical way. In
 \end{figure}
 
 \newpage
-As shown in figure~\ref{fig:paymatrix}, mutual cooperation gives reward payoff $R$ to both players. One defection between two players gives the temptation payoff $T$ for defector which is larger than $R$ so that it induces the player to defect when the opponent cooperates. The opponent will get what is called the sucker's payoff $S$. In case of mutual defection, they will get punishment $P$ payoff which is larger than $S$ so that it also induces the player to defect when the opponent defect. In sum, everybody is expected to defect, called the \textit{"tragedy of the commons"} (Hardin, 1968).
+As shown in figure~\ref{fig:paymatrix}, mutual cooperation gives reward payoff $R$ to both players. One defection between two players gives the temptation payoff $T$ for defector which is larger than $R$ so that it induces the player to defect when the opponent cooperates. The opponent will get what is called the sucker's payoff $S$. In case of mutual defection, they will get punishment $P$ payoff which is larger than $S$ so that it also induces the player to defect when the opponent defect. In sum, everybody is expected to defect, called the \textit{"tragedy of the commons"} (Hardin, 1968). We used a simplified version of the prisoner's dilemma game by setting $T=b$, $R=1$, $P=S=0$ [3]. 
 
 
 \subsection{Spatial Game with Strategies}
@@ -156,16 +156,16 @@ The code for each model is implemented in \verb|code/cooperation.m|, and the cod
 \subsection{Strategy Imitation}
 Basically, all models include \verb|Strategy Imitation| procedure as follows:
 
-\begin{algorithm}[!htbp]
+\begin{algorithm}[H]
   \caption{Strategy Imitation}\label{imitation}
   \begin{algorithmic}[1]
     \Procedure{Strategy Imitation}{$r,c$}
       \State $payoff_{max} \gets payoff_{r,c}$
       \State $r_{max},c_{max} \gets r,c$
-      \For{$neighbor \gets neighbors$}\Comment{von Neumann Neighbour $m$}
-      	\If {$payoff_{neighbor} > payoff_{max}$}\Comment{Find the Best Neighbour}
-        \State $payoff_{max} \gets payoff_{neighbor}$
-        \State $r_{max},c_{max} \gets r_{neighbor},c_{neighbor}$
+      \For{$neighbour \gets neighbours$}\Comment{von Neumann Neighbour $m$}
+      	\If {$payoff_{neighbour} > payoff_{max}$}\Comment{Find the Best Neighbour}
+        \State $payoff_{max} \gets payoff_{neighbour}$
+        \State $r_{max},c_{max} \gets r_{neighbour},c_{neighbour}$
         \EndIf
       \EndFor
       \State $strategy_{r,c} \gets strategy_{r_{max},c_{max}}$   \Comment{Imitate Strategy (Cooperator or Defector)}
@@ -177,7 +177,7 @@ Basically, all models include \verb|Strategy Imitation| procedure as follows:
 \subsection{Success-Driven Migration Model}
 In success-driven migration model, each individual update its payoff and compute the fictitious payoff of empty neighbour sites, then migrate to there as follows:
 
-\begin{algorithm}[!htbp]
+\begin{algorithm}[H]
   \caption{Success-Driven Migration Model}\label{successdriven}
 	\begin{algorithmic}[1]
 	\Procedure{Success-Driven Migration Model}{}
@@ -193,8 +193,8 @@ In success-driven migration model, each individual update its payoff and compute
 		
 	\begin{algorithmic}[1]
     \Procedure{Update Payoff}{$r,c$}
-      \For{$neighbor \gets neighbors$}\Comment{von Neumann Neighbour $m$}
-      	\State $payoff_{r,c} \gets payoff_{r,c} + payoffMatrix(r,c, neighbor)$ \Comment{Matrix of $T,R,P,S$}
+      \For{$neighbour \gets neighbours$}\Comment{von Neumann Neighbour $m$}
+      	\State $payoff_{r,c} \gets payoff_{r,c} + payoffMatrix(r,c, neighbour)$ \Comment{Matrix of $T,R,P,S$}
       \EndFor      
     \EndProcedure
   \end{algorithmic}		
@@ -203,10 +203,10 @@ In success-driven migration model, each individual update its payoff and compute
     \Procedure{Success-Driven Migration}{$r,c$}
       \State $payoff_{max} \gets payoff_{r,c}$\Comment{The Maximum Fictitious Payoff}
       \State $r_{max},c_{max} \gets r,c$
-      \For{$neighbor \gets neighbors$}\Comment{Empty Sites in Moore Neighbour $M$}
-      	\If {$payoff_{neighbor} > payoff_{max}$}\Comment{Find the Best Neighbour}
-        \State $payoff_{max} \gets payoff_{neighbor}$
-        \State $r_{max},c_{max} \gets r_{neighbor},c_{neighbor}$
+      \For{$neighbour \gets neighbours$}\Comment{Empty Sites in Moore Neighbour $M$}
+      	\If {$payoff_{neighbour} > payoff_{max}$}\Comment{Find the Best Neighbour}
+        \State $payoff_{max} \gets payoff_{neighbour}$
+        \State $r_{max},c_{max} \gets r_{neighbour},c_{neighbour}$
         \EndIf
       \EndFor
       \State $strategy_{r_{max},c_{max}} \gets strategy_{r,c}$   \Comment{Migrate to the Best Candidate}
@@ -222,7 +222,7 @@ In success-driven migration model, each individual update its payoff and compute
 \subsection{Reputation-Based Migration Model}
 In reputation-based migration model, individuals compute the reputation of neighbours and leaving probability based on it. Then, move to a random empty site and imitate strategy as follows:
 
-\begin{algorithm}[!htbp]
+\begin{algorithm}[H]
   \caption{Reputation-Based Migration Model}\label{reputationbased}
 	\begin{algorithmic}[1]
 	\Procedure{Reputation-Based Migration Model}{}
@@ -238,14 +238,14 @@ In reputation-based migration model, individuals compute the reputation of neigh
 	\end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}[!htbp]
+\begin{algorithm}[H]
   \caption{Reputation-Based Migration}\label{reputationbasedmigration}
 	\begin{algorithmic}[1]
     \Procedure{Compute Reputation}{$r,c,\gamma,\alpha$}
       \State $sum_{reputation} \gets 0$\Comment{Sum of Neighbours Reputation}
 	  \State $P \gets 0$\Comment{The Probability of Leaving}
-      \For{$neighbor \gets neighbors$}\Comment{Empty Sites in Moore Neighbour $M$}
-        \State $sum_{reputation} \gets sum_{reputation} + reputation_{neighbor}^{\gamma}$
+      \For{$neighbour \gets neighbours$}\Comment{Empty Sites in Moore Neighbour $M$}
+        \State $sum_{reputation} \gets sum_{reputation} + reputation_{neighbour}^{\gamma}$
       \EndFor
       \If {$sum_{reputation} > 0$}
       	\State $P \gets reputation_{r,c}^{\gamma} / sum_{reputation}$
@@ -260,9 +260,9 @@ In reputation-based migration model, individuals compute the reputation of neigh
 		
 	\begin{algorithmic}[1]
     \Procedure{Random Migration}{$r,c,P$}
-      \State{$neighbor \gets rand(neighbors,P)$} \Comment{Select an Empty Sites in Moore Neighbour $M$}
-      \State $strategy_{r_{neighbor},c_{neighbor}} \gets strategy_{r,c}$   \Comment{Migrate to the Neighbour}
-      \State $payoff_{r_{neighbor},c_{neighbor}} \gets payoff_{r,c}$
+      \State{$neighbour \gets rand(neighbours,P)$} \Comment{Select an Empty Sites in Moore Neighbour $M$}
+      \State $strategy_{r_{neighbour},c_{neighbour}} \gets strategy_{r,c}$   \Comment{Migrate to the Neighbour}
+      \State $payoff_{r_{neighbour},c_{neighbour}} \gets payoff_{r,c}$
       \State $strategy_{r,c} \gets empty$   \Comment{Make Clear Previous Site}
       \State $payoff_{r,c} \gets 0$
       \State \textbf{return} $r_{new},c_{new}$	\Comment{Return Migrated Site}
@@ -274,7 +274,7 @@ In reputation-based migration model, individuals compute the reputation of neigh
 \subsection{Our Model}
 Our model, which is the combination of success-driven migration and reputation-based migration model, is in the following:
 
-\begin{algorithm}[!htbp]
+\begin{algorithm}[H]
   \caption{Success-Driven and Reputation-Based Migration Model}\label{ourmodel}
 	\begin{algorithmic}[1]
 	\Procedure{Success-Driven and Reputation-Based Migration Model}{}
@@ -467,7 +467,7 @@ If we compare the Success-Driven migration model and our model, the main differe
 	\label{fig:grids_imitation}
 \end{figure}
 
-Figure~\ref{fig:grids_imitation} shows the patterns of cooperators and defectors in the models with imitation. We can see the same two effects previously analysed for the models without imitation, but in different form.
+Figure~\ref{fig:grids_imitation} shows the patterns of cooperators and defectors in the models with imitation. We can see the same two effects previously analysed for the models without imitation, but in different forms.
 The randomness of placement in the Reputation-Based migration model (\ref{fig:grids_imitation3}) induces a grid where the players are randomly placed on the grid and the empty space is randomly spread on the grid. In the Success-Driven migration model (\ref{fig:grids_imitation2}) and our model (\ref{fig:grids_imitation6}), the cooperators are organized in denser clusters because this is where they get the biggest payoff.
 This time, the difference between the Success-Driven migration model and our model is that in our model, the defectors are isolated. This is again because the defectors have little tendency to migrate in our model and the cooperator go away from them.
 
@@ -479,7 +479,7 @@ One of the drawback of the Reputation-Based migration model was its randomness a
 
 Our model doesn't get cooperator ratios as high as the success-driven migration model. However, it gets ratios higher than 90\% with almost all the parameters $\alpha$ and $\gamma$ we tested. This is higher than the reputation-based migration model.
 
-Finally, our model manages to get this high ratio, almost as high as the one from the success-driven migration model, with a more natural way of migrating. Our model lets the player migrate based on their choice and we can see this in a slower rate of convergence. Even if the highest cooperator needs more time to be reached, the cooperator still take over the defectors.
+Finally, our model manages to get this high ratio, almost as high as the one from the success-driven migration model, with a more natural way of migrating. Our model lets the player migrate based on their choice and we can see this in a slower rate of convergence. Even if the highest cooperator ratio needs more time to be reached, the cooperator still take over the defectors.
 
 
 \section{Summary and Outlook}
@@ -492,7 +492,7 @@ We used MATLAB to implement the prisoner's dilemma game with imitation and with 
 \end{enumerate}
 We ran simulations of the game for the three different models and compared the results. The purpose was to find if our model, which is a more natural one based on choice instead of randomness, can have a cooperator ratio higher than or as high as the other models.
 
-Our model was found to converge rapidly to a high ratio of cooperators. This convergence in thousands of iterations was similar to the one of the Success-Driven migration model but was slower to reach its value. It distinguished our model from the Reputation-Based migration model which didn't reach any stable state before tens of thousand of iteration.
+Our model was found to converge rapidly to a high ratio of cooperators. This convergence in thousands of iterations was similar to the one of the Success-Driven migration model but a little slower. It distinguished our model from the Reputation-Based migration model which didn't reach any stable state before tens of thousand of iteration.
 
 The cooperator ratios our model converges to are almost as high as the one from the Success-Driven migration model but generally lower. They are still always above 90\% except for some extreme parameters. It again distinguished our model from the Reputation-Based migration model which tendency was to have a ratio falling to 0\%.
 
