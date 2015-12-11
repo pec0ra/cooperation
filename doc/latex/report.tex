@@ -296,20 +296,20 @@ Our model, which is the combination of success-driven migration and reputation-b
 \subsection{Other models}
 To look at the migration patterns, we used three more models :
 \begin{enumerate}
-\item Success-Driven migration without immitation
-\item Reputation-Based migration without immitation
-\item Success-Driven and Reputation-Based migration without immitation
+\item Success-Driven migration without imitation
+\item Reputation-Based migration without imitation
+\item Success-Driven and Reputation-Based migration without imitation
 \end{enumerate}
 
-These models don't really represent real life situations but we used them compare how the different migrations work without the effect of immitation.
+These models don't really represent real life situations but we used them compare how the different migrations work without the effect of imitation.
 
 \newpage
 \section{Simulation Results and Discussion}
 In this section, we present the results of our simulations. 
 
 \subsection{Convergence}
-It is easy to see on the plots that the Success-Driven migration model, the model with imitation only and our model converge to a stable cooperator ratio in less than 5000 iterations. This was the case for all the different parameters $\alpha$ and $\gamma$ that we tried.
-The Success-Driven migration model always converges faster than our model. This is because our model has a smaller rate of migration.
+It is easy to see on the plots that the success-driven migration model, the model with imitation only and our model converge to a stable cooperator ratio in less than 5000 iterations. This was the case for all the different parameters $\alpha$ and $\gamma$ that we tried.
+The success-driven migration model always converges faster than our model. This is because our model has a smaller rate of migration.
 \begin{figure}[!h]
 	\centering
         \includegraphics[width=0.5\textwidth]{../../other/plots/convergence-20000.eps}
@@ -346,7 +346,7 @@ The Success-Driven migration model always converges faster than our model. This 
 	\label{fig:grids_stable}
 \end{figure}
 
-The Reputation-Based migration model only reached a stable cooperator ratio after a number of iteration in the order of 30'000. This is due to the random nature of the migration. The player don't choose an empty place based on their interest to migrate but get assigned a random one. Our simulations didn't have results that could give us certainty that this stable cooperator ratio is always reached and that there won't be an instability after a greater number of iterations.
+The reputation-based migration model only reached a stable cooperator ratio after a number of iteration in the order of 30'000. This is due to the random nature of the migration. The player don't choose an empty place based on their interest to migrate but get assigned a random one. Our simulations didn't have results that could give us certainty that this stable cooperator ratio is always reached and that there won't be an instability after a greater number of iterations.
 
 \begin{figure}
 	\centering
@@ -402,7 +402,7 @@ For all other values, these parameters have no big impact on the cooperator rati
 	\label{fig:ratio_drop}
 \end{figure}
 
-In figure~\ref{fig:ratio_drop}, you can notice a drop in cooperator ratio at the beginning of the simulation for all the models which implement the imitation. This happened in all our simulations. The big rate of migration of the Success-Driven migrations compensate part of this drop.
+In figure~\ref{fig:ratio_drop}, you can notice a drop in cooperator ratio at the beginning of the simulation for all the models which implement the imitation. This happened in all our simulations. The big rate of migration of the success-driven migrations compensate part of this drop.
 
 \newpage
 \subsection{Patterns}
@@ -431,11 +431,11 @@ In this part, we will look at how cooperators and defectors place themselves on 
 	\label{fig:grids_no_imitation}
 \end{figure}
 
-Figure~\ref{fig:grids_no_imitation} shows the patterns of the cooperators and defectors for the three models without imitation. In these models, the cooperator ratio stays fix at $50\%$. The first thing that we can see is that in our model (\ref{fig:grids_no_imitation5}) and the Success-Driven migration model (\ref{fig:grids_no_imitation1}), the cooperators arrange themselves in clusters whereas they are randomly placed in the Reputation-Based migration model (\ref{fig:grids_no_imitation4}).
-This randomness in the Reputation-Based migration model is again due to the players being placed randomly on the grid when they migrate.
+Figure~\ref{fig:grids_no_imitation} shows the patterns of the cooperators and defectors for the three models without imitation. In these models, the cooperator ratio stays fix at $50\%$. The first thing that we can see is that in our model (\ref{fig:grids_no_imitation5}) and the success-driven migration model (\ref{fig:grids_no_imitation1}), the cooperators arrange themselves in clusters whereas they are randomly placed in the reputation-based migration model (\ref{fig:grids_no_imitation4}).
+This randomness in the reputation-based migration model is again due to the players being placed randomly on the grid when they migrate.
 In the two other models, the players choose where they go based on their interest and thus the cooperators go near other cooperators because they give them the best payoff.
 
-If we compare the Success-Driven migration model and our model, the main difference is in the patterns of the defectors. In the Success-Driven migration, the defectors are almost all placed around a cooperator cluster whereas in our model they are randomly placed on the grid. This difference can be explained by the fact that in our model, the players migrate only when their neighbours have a worse reputation than them. Since the defectors have a bad reputation, they generally don't move and stay at the random place they were assigned at the beginning. In the Success-Driven migration model, the defectors migrate and go around cooperators since they give them the best payoff.
+If we compare the success-driven migration model and our model, the main difference is in the patterns of the defectors. In the success-driven migration, the defectors are almost all placed around a cooperator cluster whereas in our model they are randomly placed on the grid. This difference can be explained by the fact that in our model, the players migrate only when their neighbours have a worse reputation than them. Since the defectors have a bad reputation, they generally don't move and stay at the random place they were assigned at the beginning. In the success-driven migration model, the defectors migrate and go around cooperators since they give them the best payoff.
 
 
 \begin{figure}[H]
@@ -467,14 +467,14 @@ If we compare the Success-Driven migration model and our model, the main differe
 \end{figure}
 
 Figure~\ref{fig:grids_imitation} shows the patterns of cooperators and defectors in the models with imitation. We can see the same two effects previously analysed for the models without imitation, but in different forms.
-The randomness of placement in the Reputation-Based migration model (\ref{fig:grids_imitation3}) induces a grid where the players are randomly placed on the grid and the empty space is randomly spread on the grid. In the Success-Driven migration model (\ref{fig:grids_imitation2}) and our model (\ref{fig:grids_imitation6}), the cooperators are organized in denser clusters because this is where they get the biggest payoff.
-This time, the difference between the Success-Driven migration model and our model is that in our model, the defectors are isolated. This is again because the defectors have little tendency to migrate in our model and the cooperator go away from them.
+The randomness of placement in the reputation-based migration model (\ref{fig:grids_imitation3}) induces a grid where the players are randomly placed on the grid and the empty space is randomly spread on the grid. In the success-driven migration model (\ref{fig:grids_imitation2}) and our model (\ref{fig:grids_imitation6}), the cooperators are organized in denser clusters because this is where they get the biggest payoff.
+This time, the difference between the success-driven migration model and our model is that in our model, the defectors are isolated. This is again because the defectors have little tendency to migrate in our model and the cooperator go away from them.
 
 \subsection{Discussion}
 
 All the three last points showed us that the combination of success-driven migration and reputation-based migration gives indeed in the results a combination of the two.
 
-One of the drawback of the Reputation-Based migration model was its randomness and unpredictability. Our model gives stability to this Reputation-Based migration by adding the choice of the place to migrate. In terms of convergence, cooperator ratios and cooperator patterns, our model distinguish itself from the reputation-based migration model by getting the predictability of the success-driven migration model.
+One of the drawback of the reputation-based migration model was its randomness and unpredictability. Our model gives stability to this reputation-based migration by adding the choice of the place to migrate. In terms of convergence, cooperator ratios and cooperator patterns, our model distinguish itself from the reputation-based migration model by getting the predictability of the success-driven migration model.
 
 Our model doesn't get cooperator ratios as high as the success-driven migration model. However, it gets ratios higher than 90\% with almost all the parameters $\alpha$ and $\gamma$ we tested. This is higher than the reputation-based migration model.
 
@@ -491,9 +491,9 @@ We used MATLAB to implement the prisoner's dilemma game with imitation and with 
 \end{enumerate}
 We ran simulations of the game for the three different models and compared the results. The purpose was to find if our model, which is a more natural one based on choice instead of randomness, can have a cooperator ratio higher than or as high as the other models.
 
-Our model was found to converge rapidly to a high ratio of cooperators. This convergence in thousands of iterations was similar to the one of the Success-Driven migration model but a little slower. It distinguished our model from the Reputation-Based migration model which didn't reach any stable state before tens of thousand of iteration.
+Our model was found to converge rapidly to a high ratio of cooperators. This convergence in thousands of iterations was similar to the one of the success-driven migration model but a little slower. It distinguished our model from the reputation-based migration model which didn't reach any stable state before tens of thousand of iteration.
 
-The cooperator ratios our model converges to are almost as high as the one from the Success-Driven migration model but generally lower. They are still always above 90\% except for some extreme parameters. It again distinguished our model from the Reputation-Based migration model which tendency was to have a ratio falling to 0\%.
+The cooperator ratios our model converges to are almost as high as the one from the success-driven migration model but generally lower. They are still always above 90\% except for some extreme parameters. It again distinguished our model from the reputation-based migration model which tendency was to have a ratio falling to 0\%.
 
 We didn't analyse our model under noisy conditions and an interesting next step would be to try and compare our model similarly to the work of Helbing and Yu in The outbreak of cooperation among success-driven individuals under noisy conditions [1]. Another interesting addition would be to try our model with different payoff parameters or temptation to defect.
 
