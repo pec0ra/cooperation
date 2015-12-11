@@ -88,8 +88,8 @@
 
 
 \section{Abstract}
+Cooperation is one of the most important issue in the society in terms of the stability and productivity of the society where individuals pursue selfishness. Many studies have tried to explain the evolution of cooperation among unrelated individuals, and we can improve our understanding about it in a game-theoretical way. Most of the time, in real life, more than one factor play a role at the same time. Our model in this paper is designed to reflect that fact. It is the combination of the success-driven and reputation-based migration model to decide where to go and whether move or not \textit{simultaneously}. As a result of comparison with existing models, our model shows that it is distinguishable from the reputation-based migration model in terms of convergence, cooperator ratios and cooperator patterns by getting the predictability of the success-driven migration model. Compared to the success-driven migration model, it gets cooperator ratio as high as the one from the success-driven migration model with a more natural way of migrating.
 
-\newpage
 \section{Individual contributions}
 \subsection{Byungsoo Kim}
 \begin{itemize}
@@ -126,7 +126,7 @@ We will use the well known prisoner's dilemma game in a game-theoretical way. In
 
 \begin{figure}[!htbp]
 	\centering
-	\includegraphics[scale=0.75]{../../other/pd_payoff_matrix.png}
+	\includegraphics[scale=0.72]{../../other/pd_payoff_matrix.png}
     \caption{Payoff Matrix of Prisoner's Dilemma}
     \label{fig:paymatrix}
 \end{figure}
@@ -304,14 +304,13 @@ To look at the migration patterns, we used three more models :
 These models don't really represent real life situations but we used them compare how the different migrations work without the effect of immitation.
 
 \newpage
-
 \section{Simulation Results and Discussion}
 In this section, we present the results of our simulations. 
 
 \subsection{Convergence}
 It is easy to see on the plots that the Success-Driven migration model, the model with imitation only and our model converge to a stable cooperator ratio in less than 5000 iterations. This was the case for all the different parameters $\alpha$ and $\gamma$ that we tried.
 The Success-Driven migration model always converges faster than our model. This is because our model has a smaller rate of migration.
-\begin{figure}
+\begin{figure}[!h]
 	\centering
         \includegraphics[width=0.5\textwidth]{../../other/plots/convergence-20000.eps}
 	\caption{Cooperator ratios after a big number of iterations. We can see that the three models converge in about 2000 iterations. We used the parameters $\alpha = 0.5$ and $\gamma = 500$}
@@ -328,7 +327,7 @@ The Success-Driven migration model always converges faster than our model. This 
 	\caption{Grid after 3000 iterations}
     	\end{subfigure}
 
-	\caption{Grids for the Success-Driven migration model after different number of iterations. We can see that it almost doesn't change and reached a stable state. We used the parameters $\alpha = 0.5$ and $\gamma = 500$}
+	\caption{Grids for the Success-Driven migration model after different number of iterations. We can see that it almost doesn't change and reached a stable state.}
 	\label{fig:grids_stable}
 \end{figure}
 
@@ -364,10 +363,10 @@ The Reputation-Based migration model only reached a stable cooperator ratio afte
 	\label{fig:convergence_reputation}
 \end{figure}
 
-
+\newpage
 \subsection{Cooperator ratios}
 
-To compare the cooperator ratios we ploted the evolution of the ratios over the iterations for different parameters $\gamma$ and $\alpha$
+To compare the cooperator ratios, we plotted the evolution of the ratios over the iterations for different parameters $\gamma$ and $\alpha$.
 
 \begin{figure}
 	\centering
@@ -403,9 +402,9 @@ For all other values, these parameters have no big impact on the cooperator rati
 	\label{fig:ratio_drop}
 \end{figure}
 
-In figure~\ref{fig:ratio_drop}, you can notice a drop in cooperator ratio at the begining of the simulation for all the models which implement the imitation. This happened in all our simulations. The big rate of migration of the Success-Driven migrations compensate part of this drop.
+In figure~\ref{fig:ratio_drop}, you can notice a drop in cooperator ratio at the beginning of the simulation for all the models which implement the imitation. This happened in all our simulations. The big rate of migration of the Success-Driven migrations compensate part of this drop.
 
-
+\newpage
 \subsection{Patterns}
 
 In this part, we will look at how cooperators and defectors place themselves on the grid. We printed the grid for each model after a fixed number of iterations. We put a blue point where there was a cooperator, a red point where there was a defector and let a white space for each empty space.
@@ -432,7 +431,7 @@ In this part, we will look at how cooperators and defectors place themselves on 
 	\label{fig:grids_no_imitation}
 \end{figure}
 
-Figure~\ref{fig:grids_no_imitation} shows the patterns of the cooperators and defectors for the three models without imitation. In these models, the cooperator ratio stays fix at $50\%$. The first thing that we can see is that in our model (\ref{fig:grids_no_imitation5}) and the Success-Driven migration model (\ref{fig:grids_no_imitation1}), the cooperators arange themselves in clusters whereas they are randomly placed in the Reputation-Based migration model (\ref{fig:grids_no_imitation4}).
+Figure~\ref{fig:grids_no_imitation} shows the patterns of the cooperators and defectors for the three models without imitation. In these models, the cooperator ratio stays fix at $50\%$. The first thing that we can see is that in our model (\ref{fig:grids_no_imitation5}) and the Success-Driven migration model (\ref{fig:grids_no_imitation1}), the cooperators arrange themselves in clusters whereas they are randomly placed in the Reputation-Based migration model (\ref{fig:grids_no_imitation4}).
 This randomness in the Reputation-Based migration model is again due to the players being placed randomly on the grid when they migrate.
 In the two other models, the players choose where they go based on their interest and thus the cooperators go near other cooperators because they give them the best payoff.
 
@@ -441,23 +440,23 @@ If we compare the Success-Driven migration model and our model, the main differe
 
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}[t]{0.3\textwidth}
+	\begin{subfigure}[t]{0.26\textwidth}
         \includegraphics[width=\textwidth]{../../other/grids/m0-t200-a5-g300.jpg}
 	\caption{Imitation only}
 	\label{fig:grids_imitation0}
     	\end{subfigure}
-	\begin{subfigure}[t]{0.3\textwidth}
+	\begin{subfigure}[t]{0.26\textwidth}
         \includegraphics[width=\textwidth]{../../other/grids/m3-t200-a5-g300.jpg}
 	\caption{Reputation-Based migration}
 	\label{fig:grids_imitation3}
     	\end{subfigure}
 
-	\begin{subfigure}[t]{0.3\textwidth}
+	\begin{subfigure}[t]{0.26\textwidth}
         \includegraphics[width=\textwidth]{../../other/grids/m2-t200-a5-g300.jpg}
 	\caption{Success-Driven migration}
 	\label{fig:grids_imitation2}
     	\end{subfigure}
-	\begin{subfigure}[t]{0.3\textwidth}
+	\begin{subfigure}[t]{0.26\textwidth}
         \includegraphics[width=\textwidth]{../../other/grids/m6-t200-a5-g300.jpg}
 	\caption{Success-Driven and Reputation-Based migration}
 	\label{fig:grids_imitation6}
